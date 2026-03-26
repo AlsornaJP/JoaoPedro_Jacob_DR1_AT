@@ -10,12 +10,25 @@ public class Funcionario {
     private String nome;
     private double salario;
 
-    public double calcularSalarioAnual(){
-        return salario * 12;
+    public String getNome() {
+        return nome;
     }
 
-//    public double calcularIR(){
-//        var salarioAnual = calcularSalarioAnual();
-//
-//    }
+    public double calcularSalarioAnual(){
+        return Double.parseDouble(String.format("%.2f", salario* 12));
+    }
+
+    public double calcularIR() {
+        double salarioAnual = calcularSalarioAnual();
+
+        if (salarioAnual <= 22_847.76) {
+            return 0.00;
+        } else if (salarioAnual >= 45_012.61) {
+            return Double.parseDouble(String.format("%.2f",salarioAnual * 0.275));
+        } else if (salarioAnual >= 33_919.81) {
+            return Double.parseDouble(String.format("%.2f",salarioAnual * 0.15));
+        } else {
+            return Double.parseDouble(String.format("%.2f",salarioAnual * 0.075));
+        }
+    }
 }
