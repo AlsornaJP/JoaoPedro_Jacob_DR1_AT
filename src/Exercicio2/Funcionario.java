@@ -1,5 +1,7 @@
 package Exercicio2;
 
+import Utilidades.DoubleUtil;
+
 public class Funcionario {
 
     public Funcionario(String nome, double salario) {
@@ -15,7 +17,7 @@ public class Funcionario {
     }
 
     public double calcularSalarioAnual(){
-        return Double.parseDouble(String.format("%.2f", salario* 12));
+        return DoubleUtil.truncarDouble(salario * 12,2);
     }
 
     public double calcularIR() {
@@ -24,11 +26,11 @@ public class Funcionario {
         if (salarioAnual <= 22_847.76) {
             return 0.00;
         } else if (salarioAnual >= 45_012.61) {
-            return Double.parseDouble(String.format("%.2f",salarioAnual * 0.275));
+            return DoubleUtil.truncarDouble(salarioAnual * 0.275,2);
         } else if (salarioAnual >= 33_919.81) {
-            return Double.parseDouble(String.format("%.2f",salarioAnual * 0.15));
+            return DoubleUtil.truncarDouble(salarioAnual * 0.15,2);
         } else {
-            return Double.parseDouble(String.format("%.2f",salarioAnual * 0.075));
+            return DoubleUtil.truncarDouble(salarioAnual * 0.075,2);
         }
     }
 }
