@@ -11,13 +11,14 @@ public class CalculadoraIR {
         System.out.println("insira o salário do funcionário");
         double salario = scan.nextDouble();
 
-        Funcionario func = new Funcionario(nome, salario);
+        Cliente cliente = new Cliente(nome, salario);
 
-        var salarioAnual = func.calcularSalarioAnual();
-        var deducao = func.calcularIR();
+        var salarioAnual = cliente.calcularSalarioAnual();
+        var deducao = cliente.calcularIR();
         var salarioLiquido = salarioAnual - deducao;
 
-        System.out.println("O valor do imposto de renda para " + func.getNome() + " é de " + deducao + "  reais, e o salário líquido é de " + salarioLiquido + " reais");
+        System.out.println("O valor do imposto de renda para " + cliente.getNome() + " é de " + deducao + "  reais, e o salário líquido é de " + salarioLiquido + " reais");
     }
 
 }
+

@@ -2,9 +2,9 @@ package Exercicio2;
 
 import Utilidades.DoubleUtil;
 
-public class Funcionario {
+public class Cliente {
 
-    public Funcionario(String nome, double salario) {
+    public Cliente(String nome, double salario) {
         this.nome = nome;
         this.salario = salario;
     }
