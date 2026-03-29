@@ -14,25 +14,18 @@ public abstract class Funcionario {
     private String nome;
     private String sobrenome;
     private String cpf;
-    private double salario;
+    protected double salario;
     //Getters
     //----------------
     public String getNomeCompleto() {
         return nome + " " + sobrenome;
     }
-    public String getCpf() {
-        return cpf;
-    }
-    public double getSalario() {
-        return salario;
-    }
+    public final String getCpf() {return cpf;}
+    public double getSalario() {return salario;}
     //Setters
     //----------------
     public void setNome(String nome) {
         this.nome = nome;
-    }
-    public void setSalario(double salario) {
-        this.salario = salario;
     }
     public void setCpf(String cpf) {
         this.cpf = cpf;
