@@ -1,6 +1,5 @@
 package Exercicios7_12;
 
-import Utilidades.Erros.ClasseInvalidaException;
 import Utilidades.Erros.CpfInvalidoException;
 import Utilidades.Erros.SenhaIncorretaException;
 import Utilidades.ValidarCpf;
@@ -162,22 +161,20 @@ public class Main {
                         cpfGerente = scan.nextLine();
                     }
 
-                    try{
+                    try {
                         var func = empresa.buscarFuncionario(cpfGerente);
+                        if (!(func instanceof Gerente ger)) {
+                            System.out.println("Não é gerente");
+                            break;
+                        }
 
-                        if (!func.getClass().equals(Gerente.class)){
-                            throw new ClasseInvalidaException("Não é gerente");
-                        }else{
-                            Gerente ger = (Gerente) func;
-                            try {
-                                boolean autenticado = ger.autenticar("123");
-                                if (autenticado){
-                                    System.out.println("Senha correta");
-                                }
-                            } catch (SenhaIncorretaException e) {
-                                System.out.println(e.getMessage());
-                            }                        }
-                    } catch (CpfInvalidoException e) {
+                        System.out.println("Digite a senha:");
+                        String senha = scan.nextLine();
+
+                        if (ger.autenticar(senha)) {
+                            System.out.println("Senha correta");
+                        }
+                    } catch (CpfInvalidoException | SenhaIncorretaException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
