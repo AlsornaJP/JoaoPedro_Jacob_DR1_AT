@@ -136,8 +136,8 @@ public class Main {
                     }
 
                     try{
-                        empresa.removerFuncionario(cpfRemocao);
                         LogUtil.salvarLog("Remover", empresa.buscarFuncionario(cpfRemocao));
+                        empresa.removerFuncionario(cpfRemocao);
                     } catch (CpfInexistenteException e) {
                         System.out.println(e.getMessage());
                         LogUtil.salvarErro(e);
@@ -171,9 +171,10 @@ public class Main {
                     }
 
                     try{
-                        var salario = empresa.buscarFuncionario(cpfSalario).calcularSalario();
+                        var func = empresa.buscarFuncionario(cpfSalario);
+                        var salario = func.calcularSalario();
                         System.out.println("O salário do funcionário é de " + salario + " reais");
-                        LogUtil.salvarLog("Calcular salário", empresa.buscarFuncionario(cpfSalario));
+                        LogUtil.salvarLog("Calcular salário", func);
                     } catch (CpfInexistenteException e) {
                         System.out.println(e.getMessage());
                         LogUtil.salvarErro(e);
@@ -200,8 +201,8 @@ public class Main {
 
                         if (ger.autenticar(senha)) {
                             System.out.println("Senha correta");
+                            LogUtil.salvarLog("Autenticar", ger);
                         }
-                        LogUtil.salvarLog("Autenticar", ger);
                     } catch (CpfInexistenteException | SenhaIncorretaException e) {
                         System.out.println(e.getMessage());
                         LogUtil.salvarErro(e);
@@ -216,7 +217,9 @@ public class Main {
 
                 case 7:
                     DateTimeFormatter formatadorDatas = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    System.out.println("Digite a data inicial (dd/MM/yyyy):");
                     LocalDate dataInicial = LocalDate.parse(scan.nextLine(), formatadorDatas);
+                    System.out.println("Digite a data final (dd/MM/yyyy):");
                     LocalDate dataFinal = LocalDate.parse(scan.nextLine(), formatadorDatas);
 
                     try {
