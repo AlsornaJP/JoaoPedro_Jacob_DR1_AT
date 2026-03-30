@@ -17,11 +17,10 @@ public class Vendedor extends Funcionario {
     //Métodos
     //----------------
     public void registrarVenda(){vendas++;}
+    public void reiniciarVendas(){vendas = 0;}
     @Override
     public double calcularSalario() {
         var bonus = salario * 0.02;
-        var salarioFinal = DoubleUtil.truncarDouble(salario + (bonus * vendas), 2);
-        vendas = 0;
-        return salarioFinal;
+        return DoubleUtil.truncarDouble(salario + (bonus * vendas), 2);
     }
 }

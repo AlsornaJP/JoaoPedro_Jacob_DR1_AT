@@ -1,6 +1,10 @@
 package Exercicios7_12;
 
-import Utilidades.Erros.CpfInvalidoException;
+import Utilidades.DoubleUtil;
+import Utilidades.Erros.CpfInexistenteException;
+import Utilidades.Erros.CpfDuplicadoException;
+import Utilidades.Erros.DatasIncompativeisException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,41 +14,58 @@ public class Empresa {
     public Empresa() {this.funcionarios = new ArrayList<>();}
     //Atributos
     //----------------
-    private List<Funcionario> funcionarios;
+    private final List<Funcionario> funcionarios;
     //Métodos
     //----------------
-    public void adicionarFuncionario(Funcionario novoFuncionario) throws CpfInvalidoException {
+    public void adicionarFuncionario(Funcionario novoFuncionario) throws CpfDuplicadoException {
         validarFuncionario(novoFuncionario);
         funcionarios.add(novoFuncionario);
         System.out.println("\nFuncionário adicionado com sucesso");
     }
-    private void validarFuncionario(Funcionario novoFuncionario)throws CpfInvalidoException{
+    private void validarFuncionario(Funcionario novoFuncionario)throws CpfDuplicadoException {
         for(Funcionario f : funcionarios){
             if(f.getCpf().equals(novoFuncionario.getCpf())){
-                throw new CpfInvalidoException("\nCPF " + novoFuncionario.getCpf() + " já existe no banco de funcionários");
+                throw new CpfDuplicadoException("\nCPF " + novoFuncionario.getCpf() + " já existe no banco de funcionários");
             }
         }
     }
-    public void removerFuncionario(String cpf) throws CpfInvalidoException{
+    public void removerFuncionario(String cpf) throws CpfInexistenteException {
         for(Funcionario f : funcionarios){
             if (f.getCpf().equals(cpf)){
                 funcionarios.remove(f);
                 break;
             }
-            throw new CpfInvalidoException("\n Funcionário não existe no banco de funcionários");
+            throw new CpfInexistenteException("\n Funcionário não existe no banco de funcionários");
         }
     }
-    public Funcionario buscarFuncionario(String cpf) throws CpfInvalidoException{
+    public Funcionario buscarFuncionario(String cpf) throws CpfInexistenteException {
         for(Funcionario f : funcionarios) {
             if (f.getCpf().equals(cpf)) {
                 return f;
             }
         }
-        throw new CpfInvalidoException("\n Funcionário não existe no banco de funcionários");
+        throw new CpfInexistenteException("\n Funcionário não existe no banco de funcionários");
     }
     public void listarFuncionarios(){
         for(Funcionario f : funcionarios){
             System.out.println("\nNome: " + f.getNomeCompleto() + "\tCPF: " + f.getCpf());
+        }
+    }
+    public double calcularFolhaSalarial(){
+        double folhaSalarial = 0;
+        for(Funcionario f : funcionarios){
+            folhaSalarial+= f.calcularSalario();
+        }
+        return DoubleUtil.truncarDouble(folhaSalarial, 2);
+    }
+    public void buscarPorPeriodo(LocalDate dataInicial, LocalDate dataFinal) throws DatasIncompativeisException {
+        if (dataInicial.isAfter(dataFinal)){
+            throw new DatasIncompativeisException("A data inicial não pode ser posterior à data final");
+        }
+        for (Funcionario f: funcionarios){
+            if (f.getDataAdmissao().isAfter(dataInicial) && f.getDataAdmissao().isBefore(dataFinal)){
+                System.out.println("\nNome: " + f.getNomeCompleto() + "\tCPF: " + f.getCpf());
+            }
         }
     }
 }

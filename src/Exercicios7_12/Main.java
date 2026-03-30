@@ -1,9 +1,10 @@
 package Exercicios7_12;
 
-import Utilidades.Erros.CpfInvalidoException;
-import Utilidades.Erros.SenhaIncorretaException;
+import Utilidades.Erros.*;
 import Utilidades.ValidarCpf;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
@@ -22,10 +23,13 @@ public class Main {
                     3)Listar funcionários
                     4)Calcular salários
                     5)Validar gerente
-                    6)Sair
+                    6)Exibir folha mensal
+                    7)Listar funcionários por período
+                    8)Sair
                     
                     """);
             int opcao = scan.nextInt();
+            scan.nextLine();
             switch (opcao){
                 case 1:
                     System.out.println("""
@@ -37,6 +41,7 @@ public class Main {
                             
                             """);
                     int tipo = scan.nextInt();
+                    scan.nextLine();
                     switch (tipo){
                         case 1:
                             System.out.println("\nForneça o nome:");
@@ -45,17 +50,18 @@ public class Main {
                             String sobrenomeVendedor = scan.nextLine();
                             System.out.println("\nForneça o CPF:");
                             String cpfVendedor = scan.nextLine();
-                            while(!ValidarCpf.validar(cpfVendedor)){
+                            while(ValidarCpf.validar(cpfVendedor)){
                                 System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                                 cpfVendedor = scan.nextLine();
                             }
                             System.out.println("\nForneça o Salario:");
                             double salarioVendedor = scan.nextDouble();
+                            scan.nextLine();
 
-                            Vendedor vendedor = new Vendedor(nomeVendedor, sobrenomeVendedor, cpfVendedor, salarioVendedor);
                             try{
+                                Vendedor vendedor = new Vendedor(nomeVendedor, sobrenomeVendedor, cpfVendedor, salarioVendedor);
                                 empresa.adicionarFuncionario(vendedor);
-                            } catch (CpfInvalidoException e) {
+                            } catch (CpfDuplicadoException | IllegalArgumentException e) {
                                 System.out.println(e.getMessage());
                             }
                             break;
@@ -67,56 +73,64 @@ public class Main {
                             String sobrenomeGerente = scan.nextLine();
                             System.out.println("\nForneça o CPF:");
                             String cpfGerente = scan.nextLine();
-                            while(!ValidarCpf.validar(cpfGerente)){
+                            while(ValidarCpf.validar(cpfGerente)){
                                 System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                                 cpfGerente = scan.nextLine();
                             }
                             System.out.println("\nForneça o Salario:");
                             double salarioGerente = scan.nextDouble();
+                            scan.nextLine();
                             System.out.println("\nForneça uma senha:");
                             String senha = scan.nextLine();
 
-                            Gerente gerente = new Gerente(nomeGerente, sobrenomeGerente, cpfGerente, salarioGerente, senha);
+
                             try{
+                                Gerente gerente = new Gerente(nomeGerente, sobrenomeGerente, cpfGerente, salarioGerente, senha);
                                 empresa.adicionarFuncionario(gerente);
-                            } catch (CpfInvalidoException e) {
+                            } catch (CpfDuplicadoException | IllegalArgumentException | SenhaInvalidaException e) {
                                 System.out.println(e.getMessage());
                             }
                             break;
 
-//                        case 3:
-//                            System.out.println("Forneça o nome:");
-//                            String nomeSecretaria = scan.nextLine();
-//                            System.out.println("Forneça o sobrenome:");
-//                            String sobrenomeSecretaria = scan.nextLine();
-//                            System.out.println("Forneça o CPF:");
-//                            String cpfSecretaria = scan.nextLine();
-//                            System.out.println("Forneça o Salario:");
-//                            double salarioSecretaria = scan.nextDouble();
-//                            System.out.println("Sabe um idioma adicional? (1 - sim, 2 - não");
-//                            boolean idiomaAdicional = scan.nextInt() == 1;
-//
-//                            Secretaria secretaria = new Secretaria(nomeSecretaria, sobrenomeSecretaria, cpfSecretaria, salarioSecretaria, idiomaAdicional);
-//                            try{
-//                                empresa.adicionarFuncionario(secretaria);
-//                            } catch (CpfInvalidoException e) {
-//                                System.out.println(e.getMessage());
-//                            }
-//                            break;
+                        case 3:
+                            System.out.println("Forneça o nome:");
+                            String nomeSecretaria = scan.nextLine();
+                            System.out.println("Forneça o sobrenome:");
+                            String sobrenomeSecretaria = scan.nextLine();
+                            System.out.println("Forneça o CPF:");
+                            String cpfSecretaria = scan.nextLine();
+                            while(ValidarCpf.validar(cpfSecretaria)){
+                                System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
+                                cpfSecretaria = scan.nextLine();
+                            }
+                            System.out.println("Forneça o Salario:");
+                            double salarioSecretaria = scan.nextDouble();
+                            scan.nextLine();
+                            System.out.println("Sabe um idioma adicional? (1 - sim, 2 - não");
+                            boolean idiomaAdicional = scan.nextInt() == 1;
+                            scan.nextLine();
+
+                            try{
+                                Secretaria secretaria = new Secretaria(nomeSecretaria, sobrenomeSecretaria, cpfSecretaria, salarioSecretaria, idiomaAdicional);
+                                empresa.adicionarFuncionario(secretaria);
+                            } catch (CpfDuplicadoException | IllegalArgumentException e) {
+                                System.out.println(e.getMessage());
+                            }
+                            break;
                     }
                     break;
 
                 case 2:
                     System.out.println("\nInsira o cpf do funcionário que deseja remover");
                     String cpfRemocao = scan.nextLine();
-                    while(!ValidarCpf.validar(cpfRemocao)){
+                    while(ValidarCpf.validar(cpfRemocao)){
                         System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                         cpfRemocao = scan.nextLine();
                     }
 
                     try{
                         empresa.removerFuncionario(cpfRemocao);
-                    } catch (CpfInvalidoException e) {
+                    } catch (CpfInexistenteException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -124,7 +138,7 @@ public class Main {
                 case 3:
                     System.out.println("\nInsira o cpf do funcionário que deseja buscar");
                     String cpfBusca = scan.nextLine();
-                    while(!ValidarCpf.validar(cpfBusca)){
+                    while(ValidarCpf.validar(cpfBusca)){
                         System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                         cpfBusca = scan.nextLine();
                     }
@@ -132,7 +146,7 @@ public class Main {
                     try{
                         var func = empresa.buscarFuncionario(cpfBusca);
                         System.out.println("\nNome: " + func.getNomeCompleto() + "\tCPF: " + func.getCpf());
-                    } catch (CpfInvalidoException e) {
+                    } catch (CpfInexistenteException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -140,7 +154,7 @@ public class Main {
                 case 4:
                     System.out.println("\nInsira o cpf do funcionário que deseja calcular o salário");
                     String cpfSalario = scan.nextLine();
-                    while(!ValidarCpf.validar(cpfSalario)){
+                    while(ValidarCpf.validar(cpfSalario)){
                         System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                         cpfSalario = scan.nextLine();
                     }
@@ -148,7 +162,7 @@ public class Main {
                     try{
                         var salario = empresa.buscarFuncionario(cpfSalario).calcularSalario();
                         System.out.println("O salário do funcionário é de " + salario + " reais");
-                    } catch (CpfInvalidoException e) {
+                    } catch (CpfInexistenteException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -156,7 +170,7 @@ public class Main {
                 case 5:
                     System.out.println("\nInsira o cpf do gerente que deseja autenticar");
                     String cpfGerente = scan.nextLine();
-                    while(!ValidarCpf.validar(cpfGerente)){
+                    while(ValidarCpf.validar(cpfGerente)){
                         System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                         cpfGerente = scan.nextLine();
                     }
@@ -174,12 +188,29 @@ public class Main {
                         if (ger.autenticar(senha)) {
                             System.out.println("Senha correta");
                         }
-                    } catch (CpfInvalidoException | SenhaIncorretaException e) {
+                    } catch (CpfInexistenteException | SenhaIncorretaException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
 
                 case 6:
+                    var folhaMensal = empresa.calcularFolhaSalarial();
+                    System.out.println("A folha salarial mensal é de R$ " + folhaMensal);
+                    break;
+
+                case 7:
+                    DateTimeFormatter formatadorDatas = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate dataInicial = LocalDate.parse(scan.nextLine(), formatadorDatas);
+                    LocalDate dataFinal = LocalDate.parse(scan.nextLine(), formatadorDatas);
+
+                    try {
+                        empresa.buscarPorPeriodo(dataInicial, dataFinal);
+                    } catch (DatasIncompativeisException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 8:
                     System.out.println("\nTchauzinho");
                     rodando = false;
                     break;

@@ -2,13 +2,16 @@ package Exercicios7_12;
 
 import Utilidades.DoubleUtil;
 import Utilidades.Erros.SenhaIncorretaException;
-
+import Utilidades.Erros.SenhaInvalidaException;
 import java.util.List;
 
 public class Gerente extends Funcionario implements Autenticavel{
     //Construtor
     //----------------
     public Gerente(String nome, String sobrenome, String cpf,  double salario, String senha) {
+        if(senha == null || senha.trim().isEmpty()){
+            throw new SenhaInvalidaException("A senha é inválida");
+        }
         super(nome, cpf, sobrenome, salario);
         this.senha = senha;
     }
@@ -29,7 +32,7 @@ public class Gerente extends Funcionario implements Autenticavel{
     @Override
     public double calcularSalario() {
         if (vendasEquipe >= 100) {
-            return DoubleUtil.truncarDouble(salario * 1.10, 2);
+            return DoubleUtil.truncarDouble(salario * 1.1, 2);
         }
         return salario;
     }
