@@ -1,6 +1,7 @@
 package Exercicios7_12;
 
 import Utilidades.Erros.*;
+import Utilidades.LogUtil;
 import Utilidades.ValidarCpf;
 
 import java.time.LocalDate;
@@ -61,8 +62,10 @@ public class Main {
                             try{
                                 Vendedor vendedor = new Vendedor(nomeVendedor, sobrenomeVendedor, cpfVendedor, salarioVendedor);
                                 empresa.adicionarFuncionario(vendedor);
+                                LogUtil.salvarLog("Adicionar", vendedor);
                             } catch (CpfDuplicadoException | IllegalArgumentException e) {
                                 System.out.println(e.getMessage());
+                                LogUtil.salvarErro(e);
                             }
                             break;
 
@@ -87,8 +90,10 @@ public class Main {
                             try{
                                 Gerente gerente = new Gerente(nomeGerente, sobrenomeGerente, cpfGerente, salarioGerente, senha);
                                 empresa.adicionarFuncionario(gerente);
+                                LogUtil.salvarLog("Adicionar", gerente);
                             } catch (CpfDuplicadoException | IllegalArgumentException | SenhaInvalidaException e) {
                                 System.out.println(e.getMessage());
+                                LogUtil.salvarErro(e);
                             }
                             break;
 
@@ -113,8 +118,10 @@ public class Main {
                             try{
                                 Secretaria secretaria = new Secretaria(nomeSecretaria, sobrenomeSecretaria, cpfSecretaria, salarioSecretaria, idiomaAdicional);
                                 empresa.adicionarFuncionario(secretaria);
+                                LogUtil.salvarLog("Adicionar", secretaria);
                             } catch (CpfDuplicadoException | IllegalArgumentException e) {
                                 System.out.println(e.getMessage());
+                                LogUtil.salvarErro(e);
                             }
                             break;
                     }
@@ -130,8 +137,10 @@ public class Main {
 
                     try{
                         empresa.removerFuncionario(cpfRemocao);
+                        LogUtil.salvarLog("Remover", empresa.buscarFuncionario(cpfRemocao));
                     } catch (CpfInexistenteException e) {
                         System.out.println(e.getMessage());
+                        LogUtil.salvarErro(e);
                     }
                     break;
 
@@ -146,8 +155,10 @@ public class Main {
                     try{
                         var func = empresa.buscarFuncionario(cpfBusca);
                         System.out.println("\nNome: " + func.getNomeCompleto() + "\tCPF: " + func.getCpf());
+                        LogUtil.salvarLog("Busca", func);
                     } catch (CpfInexistenteException e) {
                         System.out.println(e.getMessage());
+                        LogUtil.salvarErro(e);
                     }
                     break;
 
@@ -162,8 +173,10 @@ public class Main {
                     try{
                         var salario = empresa.buscarFuncionario(cpfSalario).calcularSalario();
                         System.out.println("O salário do funcionário é de " + salario + " reais");
+                        LogUtil.salvarLog("Calcular salário", empresa.buscarFuncionario(cpfSalario));
                     } catch (CpfInexistenteException e) {
                         System.out.println(e.getMessage());
+                        LogUtil.salvarErro(e);
                     }
                     break;
 
@@ -188,13 +201,16 @@ public class Main {
                         if (ger.autenticar(senha)) {
                             System.out.println("Senha correta");
                         }
+                        LogUtil.salvarLog("Autenticar", ger);
                     } catch (CpfInexistenteException | SenhaIncorretaException e) {
                         System.out.println(e.getMessage());
+                        LogUtil.salvarErro(e);
                     }
                     break;
 
                 case 6:
                     var folhaMensal = empresa.calcularFolhaSalarial();
+                    LogUtil.salvarFolhaSalarial(folhaMensal);
                     System.out.println("A folha salarial mensal é de R$ " + folhaMensal);
                     break;
 
@@ -207,6 +223,7 @@ public class Main {
                         empresa.buscarPorPeriodo(dataInicial, dataFinal);
                     } catch (DatasIncompativeisException e) {
                         System.out.println(e.getMessage());
+                        LogUtil.salvarErro(e);
                     }
                     break;
 
