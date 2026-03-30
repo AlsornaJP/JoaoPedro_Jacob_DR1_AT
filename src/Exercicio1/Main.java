@@ -2,6 +2,7 @@ package Exercicio1;
 
 public class Main {
     static void main(String[] args){
-        System.out.println("Hello, world!");
+        String nome = "João Pedro";
+        System.out.println("Olá, meu nome é " + nome + " e estou aprendendo Java!");
     }
 }
