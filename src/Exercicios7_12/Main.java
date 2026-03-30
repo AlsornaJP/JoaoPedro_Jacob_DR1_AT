@@ -125,6 +125,9 @@ public class Main {
                                 LogUtil.salvarErro(e);
                             }
                             break;
+
+                        default:
+                            System.out.println("\nOpção inválida");
                     }
                     break;
 
@@ -222,6 +225,9 @@ public class Main {
                     System.out.println("\nTchauzinho");
                     rodando = false;
                     break;
+
+                default:
+                    System.out.println("\nOpção inválida");
             }
         }
     }
