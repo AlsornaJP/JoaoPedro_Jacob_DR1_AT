@@ -2,7 +2,7 @@ package Exercicio5;
 
 import Utilidades.DoubleUtil;
 
-public class Gerente extends Funcionario {
+class Gerente extends Funcionario {
 
     public Gerente(String nome, double salariobase) {
         super(nome, salariobase);

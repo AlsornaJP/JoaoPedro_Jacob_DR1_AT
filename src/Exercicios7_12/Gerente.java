@@ -1,6 +1,7 @@
 package Exercicios7_12;
 
 import Utilidades.DoubleUtil;
+import Utilidades.Erros.SenhaIncorretaException;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Gerente extends Funcionario implements Autenticavel{
     //Atributos
     //----------------
     private int vendasEquipe;
-    protected final String senha;
+    private final String senha;
     //Métodos
     //----------------
     public void calcularVendasEquipe(List<Vendedor> vendedores){
@@ -32,9 +33,11 @@ public class Gerente extends Funcionario implements Autenticavel{
         }
         return salario;
     }
-
     @Override
-    public boolean autenticar(String senha) {
-        return senha.equals(this.senha);
+    public boolean autenticar(String senha) throws SenhaIncorretaException {
+        if (senha.equals(this.senha)){
+            return true;
+        }
+        throw new SenhaIncorretaException("Senha incorreta");
     }
 }

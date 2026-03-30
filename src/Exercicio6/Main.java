@@ -14,7 +14,7 @@ public class Main {
         );
 
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("out/compras.csv"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("src/compras.csv"));
             writer.write("Nome, Quantidade, Preço");
             writer.newLine();
             for(Produto p : produtos){

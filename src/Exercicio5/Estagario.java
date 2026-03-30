@@ -2,7 +2,7 @@ package Exercicio5;
 
 import Utilidades.DoubleUtil;
 
-public class Estagario extends Funcionario {
+class Estagario extends Funcionario {
 
     public Estagario(String nome, double salariobase) {
         super(nome, salariobase);

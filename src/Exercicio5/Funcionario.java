@@ -1,6 +1,6 @@
 package Exercicio5;
 
-public abstract class Funcionario {
+abstract class Funcionario {
 
     public Funcionario(String nome, double salariobase) {
         this.nome = nome;
