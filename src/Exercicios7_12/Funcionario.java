@@ -12,7 +12,7 @@ public abstract class Funcionario {
         if(salario<0){
             throw new IllegalArgumentException("Salário não pode ser negativo");
         }
-        if(cpf == null || ValidarCpf.validar(cpf)){
+        if(cpf == null || !ValidarCpf.validar(cpf)){
             throw new CpfInvalidoException("CPF inválido. Digite apenas números, sem pontos ou hífen");
         }
         this.nome = nome;

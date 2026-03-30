@@ -17,6 +17,7 @@ public class Main {
         boolean rodando = true;
         while(rodando){
             System.out.println("""
+                    
                     O que deseja fazer?
                     
                     1)Cadastrar funcionário
@@ -51,7 +52,7 @@ public class Main {
                             String sobrenomeVendedor = scan.nextLine();
                             System.out.println("\nForneça o CPF:");
                             String cpfVendedor = scan.nextLine();
-                            while(ValidarCpf.validar(cpfVendedor)){
+                            while(!ValidarCpf.validar(cpfVendedor)){
                                 System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                                 cpfVendedor = scan.nextLine();
                             }
@@ -63,7 +64,7 @@ public class Main {
                                 Vendedor vendedor = new Vendedor(nomeVendedor, sobrenomeVendedor, cpfVendedor, salarioVendedor);
                                 empresa.adicionarFuncionario(vendedor);
                                 LogUtil.salvarLog("Adicionar", vendedor);
-                            } catch (CpfDuplicadoException | IllegalArgumentException e) {
+                            } catch (CpfDuplicadoException | IllegalArgumentException | CpfInvalidoException e) {
                                 System.out.println(e.getMessage());
                                 LogUtil.salvarErro(e);
                             }
@@ -76,7 +77,7 @@ public class Main {
                             String sobrenomeGerente = scan.nextLine();
                             System.out.println("\nForneça o CPF:");
                             String cpfGerente = scan.nextLine();
-                            while(ValidarCpf.validar(cpfGerente)){
+                            while(!ValidarCpf.validar(cpfGerente)){
                                 System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                                 cpfGerente = scan.nextLine();
                             }
@@ -91,7 +92,7 @@ public class Main {
                                 Gerente gerente = new Gerente(nomeGerente, sobrenomeGerente, cpfGerente, salarioGerente, senha);
                                 empresa.adicionarFuncionario(gerente);
                                 LogUtil.salvarLog("Adicionar", gerente);
-                            } catch (CpfDuplicadoException | IllegalArgumentException | SenhaInvalidaException e) {
+                            } catch (CpfDuplicadoException | IllegalArgumentException | SenhaInvalidaException | CpfInvalidoException e) {
                                 System.out.println(e.getMessage());
                                 LogUtil.salvarErro(e);
                             }
@@ -104,14 +105,14 @@ public class Main {
                             String sobrenomeSecretaria = scan.nextLine();
                             System.out.println("Forneça o CPF:");
                             String cpfSecretaria = scan.nextLine();
-                            while(ValidarCpf.validar(cpfSecretaria)){
+                            while(!ValidarCpf.validar(cpfSecretaria)){
                                 System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                                 cpfSecretaria = scan.nextLine();
                             }
                             System.out.println("Forneça o Salario:");
                             double salarioSecretaria = scan.nextDouble();
                             scan.nextLine();
-                            System.out.println("Sabe um idioma adicional? (1 - sim, 2 - não");
+                            System.out.println("Sabe um idioma adicional? (1 - sim, 2 - não)7");
                             boolean idiomaAdicional = scan.nextInt() == 1;
                             scan.nextLine();
 
@@ -119,7 +120,7 @@ public class Main {
                                 Secretaria secretaria = new Secretaria(nomeSecretaria, sobrenomeSecretaria, cpfSecretaria, salarioSecretaria, idiomaAdicional);
                                 empresa.adicionarFuncionario(secretaria);
                                 LogUtil.salvarLog("Adicionar", secretaria);
-                            } catch (CpfDuplicadoException | IllegalArgumentException e) {
+                            } catch (CpfDuplicadoException | IllegalArgumentException | CpfInvalidoException e) {
                                 System.out.println(e.getMessage());
                                 LogUtil.salvarErro(e);
                             }
@@ -130,7 +131,7 @@ public class Main {
                 case 2:
                     System.out.println("\nInsira o cpf do funcionário que deseja remover");
                     String cpfRemocao = scan.nextLine();
-                    while(ValidarCpf.validar(cpfRemocao)){
+                    while(!ValidarCpf.validar(cpfRemocao)){
                         System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                         cpfRemocao = scan.nextLine();
                     }
@@ -145,27 +146,14 @@ public class Main {
                     break;
 
                 case 3:
-                    System.out.println("\nInsira o cpf do funcionário que deseja buscar");
-                    String cpfBusca = scan.nextLine();
-                    while(ValidarCpf.validar(cpfBusca)){
-                        System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
-                        cpfBusca = scan.nextLine();
-                    }
-
-                    try{
-                        var func = empresa.buscarFuncionario(cpfBusca);
-                        System.out.println("\nNome: " + func.getNomeCompleto() + "\tCPF: " + func.getCpf());
-                        LogUtil.salvarLog("Busca", func);
-                    } catch (CpfInexistenteException e) {
-                        System.out.println(e.getMessage());
-                        LogUtil.salvarErro(e);
-                    }
+                    System.out.println("\n-----------Lista de funcionários-----------");
+                    empresa.listarFuncionarios();
                     break;
 
                 case 4:
                     System.out.println("\nInsira o cpf do funcionário que deseja calcular o salário");
                     String cpfSalario = scan.nextLine();
-                    while(ValidarCpf.validar(cpfSalario)){
+                    while(!ValidarCpf.validar(cpfSalario)){
                         System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                         cpfSalario = scan.nextLine();
                     }
@@ -184,7 +172,7 @@ public class Main {
                 case 5:
                     System.out.println("\nInsira o cpf do gerente que deseja autenticar");
                     String cpfGerente = scan.nextLine();
-                    while(ValidarCpf.validar(cpfGerente)){
+                    while(!ValidarCpf.validar(cpfGerente)){
                         System.out.println("CPF inválido. Digite apenas números, sem pontos ou hífen");
                         cpfGerente = scan.nextLine();
                     }

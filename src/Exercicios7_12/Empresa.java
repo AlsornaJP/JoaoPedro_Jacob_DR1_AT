@@ -4,6 +4,8 @@ import Utilidades.DoubleUtil;
 import Utilidades.Erros.CpfInexistenteException;
 import Utilidades.Erros.CpfDuplicadoException;
 import Utilidades.Erros.DatasIncompativeisException;
+import Utilidades.LogUtil;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +50,11 @@ public class Empresa {
     }
     public void listarFuncionarios(){
         for(Funcionario f : funcionarios){
-            System.out.println("\nNome: " + f.getNomeCompleto() + "\tCPF: " + f.getCpf());
+            System.out.println("  -> " + f.getClass().getSimpleName()
+                    + " | Nome: " + f.getNomeCompleto()
+                    + " | CPF: " + f.getCpf());
         }
+        LogUtil.salvarListaFuncionarios(funcionarios);
     }
     public double calcularFolhaSalarial(){
         double folhaSalarial = 0;
@@ -64,7 +69,10 @@ public class Empresa {
         }
         for (Funcionario f: funcionarios){
             if (f.getDataAdmissao().isAfter(dataInicial) && f.getDataAdmissao().isBefore(dataFinal)){
-                System.out.println("\nNome: " + f.getNomeCompleto() + "\tCPF: " + f.getCpf());
+                System.out.println("  -> " + f.getClass().getSimpleName()
+                        + " | Nome: " + f.getNomeCompleto()
+                        + " | CPF: " + f.getCpf()
+                        + " | Data de Admissão: " + f.getDataAdmissao());
             }
         }
     }

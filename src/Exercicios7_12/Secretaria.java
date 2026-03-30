@@ -3,7 +3,7 @@ package Exercicios7_12;
 public class Secretaria extends Funcionario{
     //Construtor
     //----------------
-    public Secretaria(String nome, String cpf, String sobrenome, double salario, boolean idiomaAdicional) {
+    public Secretaria(String nome, String sobrenome, String cpf, double salario, boolean idiomaAdicional) {
         super(nome, cpf, sobrenome, salario);
         this.idiomaAdicional = idiomaAdicional;
     }
